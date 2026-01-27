@@ -55,6 +55,7 @@ export default function Builer() {
 
         setCv(cleanCV);
         setCvId(data._id);
+        console.log("current id:", data._id)
     }
 
     const downloadCV = () => {

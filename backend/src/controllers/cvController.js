@@ -5,7 +5,7 @@ const cvTemplate = require("../services/cvTemplate");
 const createCV = async (req, res) => {
     try{
         const cv = await CV.create(req.body);
-        console.log("create cv data:", cv)
+        // console.log("create cv data:", cv)
         res.json(cv);
     }catch(err) {
         res.status(500).json({message:"Failed to save CV"});
@@ -16,7 +16,7 @@ const createCV = async (req, res) => {
 const getCV = async (req, res) => {
     try {
         const cv = await CV.findById(req.params.id);
-        console.log("getCV:",cv)
+        // console.log("getCV:",cv)
         res.json(cv);
     } catch (error) {
         console.error("Error:",error);
@@ -32,8 +32,6 @@ const updateCV = async (req, res) => {
         console.error("Error:", err);
         res.status(500).json({message:"Failed to update CV"});
     }
-    
-
 }
 
 const downloadCV = async (req, res) => {
@@ -45,15 +43,13 @@ const downloadCV = async (req, res) => {
         const html = cvTemplate(cv);
         const pdfBuffer = await generatePdf(html);
 
-        res.set({
-            "Content-Type":"application/pdf",
-            "Content-Disposition":`attachment; filename="cv.pdf"`
-        });
-
-        res.send(pdfBuffer);
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", 'attachment; filename="cv.pdf"');
+        res.setHeader("Content-Length", pdfBuffer.length);
+        res.end(pdfBuffer);
     } catch (error) {
-        console.error("Error:",error);
-        res.status(500).json({message:"Failed to download CV"});
+        console.error("PDF Error:",error);
+        res.status(500).json({message:"Failed to generate pdf"});
     }
 }
 
