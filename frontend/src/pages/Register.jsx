@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react';
 import axiosInstance from '../api/axiosConfig';
 
-
 function Register() {
     const [form, setForm] = useState({name:"", password:""});
 
@@ -11,8 +10,8 @@ function Register() {
     }
 
     const submit = async () => {
-        const response = await axiosInstance.post("auth/register", form);
-        console.log(response);
+        const response = await axiosInstance.post("/auth/register", form);
+        console.log("Response:",response);
     }
     
     return (

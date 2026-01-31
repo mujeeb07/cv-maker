@@ -91,7 +91,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        console.log('Mail and Password from frontend:', req.body)
         if(!email || !password) {
             res.status(400).json({message:"email and password required"});
         }

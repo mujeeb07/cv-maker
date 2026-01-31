@@ -7,32 +7,21 @@ import ExprienceForm from "../components/forms/ExperienceForm";
 import ProjectForm from "../components/forms/ProjectsForm";
 
 import TemplateOne from "../components/preview/TemplateOne";
+import axiosInstance from "../api/axiosConfig";
 
-export default function Builer() {
+export default function Builder() {
 
     const [cv, setCv] = useState(initialCV);
     const [cvId, setCvId] = useState(null)
     const saveCV = async () => {
 
         if(cvId) {
-            const res = await fetch(`http://localhost:5000/api/cv/${cvId}`, {
-                method:"PUT",
-                headers: {"Content-Type":"application/json"},
-                body: JSON.stringify(cv)
-            });
-
-            const data = await res.json();
+            await axiosInstance.put(`/cv/${cvId}`);
             alert("CV updated");
         }else{
-            const res = await fetch('http://localhost:5000/api/cv', {
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body: JSON.stringify(cv)
-            });
-    
-            const data = await res.json();
-            // console.log("Data, response", data, cv)
-            alert("CV saved with ID:" + data._id);
+            const response = await axiosInstance.post('/cv',cv);
+            console.log("Response axios:", response.data);
+            alert("CV saved with ID:" + response.data._id);
         }
     }
 
@@ -42,8 +31,8 @@ export default function Builer() {
             return;
         }
 
-        const res = await fetch(`http://localhost:5000/api/cv/${id}`);
-        const data = await res.json();
+        const response = await axiosInstance.get(`/cv/${id}`);
+        const data = response.data
 
         const cleanCV = {
             personal: data.personal || initialCV.personal,
