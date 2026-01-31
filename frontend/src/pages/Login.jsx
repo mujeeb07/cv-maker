@@ -1,7 +1,8 @@
 import { GoogleLogin } from '@react-oauth/google';
 import React, { useState } from 'react';
 import axiosInstance from '../api/axiosConfig';
-
+import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login() {
     const [form, setForm] = useState({email:"", password: ""});
@@ -16,6 +17,21 @@ function Login() {
         console.log("Login Response:", response.data)
         localStorage.setItem("token", response.data.token); 
         alert("Logged in")
+    }
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+            const response = await axiosInstance.post(
+                '/auth/google',
+                {
+                    token: credentialResponse.credential
+                }
+            );
+            console.log("Google login response",response.data)
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        }
+
     }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -48,11 +64,21 @@ function Login() {
                 </button>
             </div>
 
+            <div style={{ marginTop: "20px" }}>
+                <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => alert("Google Login Failed")}
+                />
+            </div>
+
             <p className="text-center text-sm mt-4 text-gray-600">
                 Don't have an account?{" "}
-                <span className="text-black font-semibold cursor-pointer">
-                Register
-                </span>
+                <Link
+                    to="/register"
+                    className="text-black font-semibold hover:underline"
+                >
+                    Register
+                </Link>
             </p>
             </div>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import axiosInstance from '../api/axiosConfig';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
     const [form, setForm] = useState({name:"", password:""});
@@ -54,9 +56,12 @@ function Register() {
 
             <p className="text-center text-sm mt-4 text-gray-600">
                 Already have an account?{" "}
-                <span className="text-black font-semibold cursor-pointer">
-                Login
-                </span>
+                <Link 
+                    to="/login"
+                    className="text-black font-semibold hover:underline"
+                >
+                    Login
+                </Link>
             </p>
             </div>
         </div>
