@@ -1,9 +1,9 @@
 
-export default function TemplateOne({cv}) {
+export default function TemplateOne({ cv }) {
     const { personal } = cv;
 
-    return(
-        <div className="bg-white p-6 shadow">
+    return (
+        <div className="bg-white text-black p-6 shadow-2xl min-h-[297mm] w-[210mm] mx-auto">
             <h1 className="text-2xl font-bold ">{personal.fullName}</h1>
             <p>{personal.email}</p>
             <p>{personal.phone}</p>
