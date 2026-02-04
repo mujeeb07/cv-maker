@@ -4,7 +4,12 @@ const cvTemplate = require("../services/cvTemplate");
 
 const createCV = async (req, res) => {
     try{
-        const cv = await CV.create(req.body);
+        // const cv = await CV.create(req.body);
+        const cv = await CV.create({
+            ...req.body,
+            user: req.userId
+        })
+
         // console.log("create cv data:", cv)
         res.json(cv);
     }catch(err) {
@@ -14,9 +19,14 @@ const createCV = async (req, res) => {
 };
 
 const getCV = async (req, res) => {
+    console.log(req)
+    const {id} = req.userId;
     try {
-        const cv = await CV.findById(req.params.id);
-        // console.log("getCV:",cv)
+        const cv = await CV.findOne({
+            // _id: id,
+            user: req.userId
+        })
+        console.log("getCV:",cv)
         res.json(cv);
     } catch (error) {
         console.error("Error:",error);
@@ -26,7 +36,11 @@ const getCV = async (req, res) => {
 
 const updateCV = async (req, res) => {
     try {
-        const cv = await CV.findByIdAndUpdate(req.params.id, req.body, { new: true});
+        // const cv = await CV.findByIdAndUpdate(req.params.id, req.body, { new: true});
+        const cv = await CV.findOne({
+            _id: id,
+            user: req.userId
+        })
         res.json(cv)
     } catch (error) {
         console.error("Error:", err);

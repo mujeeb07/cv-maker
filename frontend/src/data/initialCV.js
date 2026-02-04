@@ -1,4 +1,5 @@
 const initialCV = {
+  template: "modern",
   personal: {
     fullName: "",
     email: "",

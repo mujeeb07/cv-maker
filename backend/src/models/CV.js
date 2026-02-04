@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const cvSchema = new mongoose.Schema(
     {
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: "user",
+            required: true
+        },
         personal: {
             fullName: String,
             email: String,
@@ -32,7 +37,11 @@ const cvSchema = new mongoose.Schema(
                 description: String,
                 tech: String
             }
-        ]
+        ],
+        template: {
+            type: String,
+            default: "modern"
+        }
     },
     {timestamps: true}
 );

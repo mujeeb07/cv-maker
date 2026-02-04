@@ -8,14 +8,17 @@ export default function ThemeToggle() {
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="relative p-2.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-[var(--ring-offset)] active:scale-95 shadow-sm overflow-hidden"
             aria-label="Toggle Theme"
         >
-            {theme === 'dark' ? (
-                <Sun className="w-5 h-5" />
-            ) : (
-                <Moon className="w-5 h-5" />
-            )}
+            <div className="relative w-5 h-5">
+                <Sun
+                    className={`w-5 h-5 absolute inset-0 transform transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${theme === 'dark' ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
+                />
+                <Moon
+                    className={`w-5 h-5 absolute inset-0 transform transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${theme === 'light' ? '-rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
+                />
+            </div>
         </button>
     );
 }
