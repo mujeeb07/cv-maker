@@ -20,7 +20,7 @@ const createCV = async (req, res) => {
 
 const getCV = async (req, res) => {
     console.log(req)
-    const {id} = req.userId;
+    // const {id} = req.userId;
     try {
         const cv = await CV.findOne({
             // _id: id,
@@ -38,12 +38,12 @@ const updateCV = async (req, res) => {
     try {
         // const cv = await CV.findByIdAndUpdate(req.params.id, req.body, { new: true});
         const cv = await CV.findOne({
-            _id: id,
+            // _id: id,
             user: req.userId
         })
         res.json(cv)
     } catch (error) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         res.status(500).json({message:"Failed to update CV"});
     }
 }

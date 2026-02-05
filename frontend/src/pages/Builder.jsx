@@ -77,25 +77,50 @@ export default function Builder() {
         }
     }
 
+    // const downloadCV = async () => {
+    //     try {
+    //         const response = await axiosInstance.get(`cv/${cvId}/pdf`, {
+    //             responseType: "blob"
+    //         });
+
+    //         const url = window.URL.createObjectURL(new Blob([response.data]));
+    //         const link = document.createElement("a");
+    //         link.href = url;
+    //         link.download = "cv.pdf";
+
+    //         document.body.appendChild(link);
+    //         link.click();
+
+    //         link.remove();
+    //         window.URL.revokeObjectURL(url);
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //     }
+    // };
     const downloadCV = async () => {
-        // console.log(cvId)
-        // if (!cvId) {
-        //     alert("Please save CV first!");
-        //     return;
-        // }
-        // window.open(`http://localhost:5000/api/cv/${cvId}/pdf`);
         try {
             const response = await axiosInstance.get(`cv/${cvId}/pdf`, {
-                responseType: "blob"
-            })
+            responseType: "blob"
+            });
 
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const blob = new Blob([response.data], {
+            type: "application/pdf"
+            });
+
+            const url = window.URL.createObjectURL(blob);
+
             const link = document.createElement("a");
-            link.setAttribute("download", "cv.pdf");
+            link.href = url;
+            link.download = "cv.pdf";
+
+            document.body.appendChild(link);   
             link.click();
-            link.remove()
+
+            document.body.removeChild(link);   
+            window.URL.revokeObjectURL(url);   
+
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Download error:", error);
         }
     };
 

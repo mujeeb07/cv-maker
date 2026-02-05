@@ -31,7 +31,7 @@ export default function EducationForm({ cv, setCv }) {
         <div className="mb-6">
             <h2 className='text-xl font-bold mb-4 text-zinc-900 dark:text-gray-100 flex items-center'>
                 Education
-            </h2>
+            </h2> 
 
             <div className="space-y-4">
                 {cv.education.map((edu, index) => (
