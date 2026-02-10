@@ -63,6 +63,13 @@ module.exports = (cv) => {
       ${personal.github ? " | " + personal.github : ""}
     </div>
 
+    ${personal.summary ? `
+      <h2>Professional Summary</h2>
+      <div class="section">
+        <p>${personal.summary}</p>
+      </div>
+    ` : ""}
+
     ${skills.length ? `
       <h2>Skills</h2>
       <div class="section">

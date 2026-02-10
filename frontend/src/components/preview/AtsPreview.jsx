@@ -17,6 +17,18 @@ export default function AtsPreview({ cv }) {
             </p>
         </div>
 
+        {/* Summary */}
+        {personal.summary && (
+            <section className="mb-6">
+                <h2 className="text-lg font-semibold uppercase tracking-wide text-gray-700 mb-3">
+                Professional Summary
+                </h2>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                {personal.summary}
+                </p>
+            </section>
+        )}
+
         {/* Skills */}
         {skills.length > 0 && (
             <div className="mb-5">

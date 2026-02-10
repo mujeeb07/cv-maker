@@ -5,12 +5,13 @@ const initialCV = {
     email: "",
     phone: "",
     linkedin: "",
-    github: ""
+    github: "",
+    summary: ""
   },
-  skills: [""],
-  education: [{ degree: "", institute: "", year: "" }],
-  experience: [{ company: "", role: "", start: "", end: "", description: "" }],
-  projects: [{ title: "", description: "", tech: "" }]
+  skills: [],
+  education: [],
+  experience: [],
+  projects: []
 };
 
 export default initialCV;

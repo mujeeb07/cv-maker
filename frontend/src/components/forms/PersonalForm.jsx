@@ -20,7 +20,8 @@ function PersonalForm({ cv, setCv }) {
                 Personal Information
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                 <div className="md:col-span-2 space-y-1.5">
                     <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider ml-1">Full Name</label>
                     <input
@@ -81,6 +82,17 @@ function PersonalForm({ cv, setCv }) {
                         value={cv.personal.github}
                         onChange={handleChange}
                         className='input'
+                    />
+                </div>
+
+                <div className="md:col-span-2 space-y-1.5">
+                    <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider ml-1">Professional Summary</label>
+                    <textarea
+                        name='summary'
+                        placeholder="Describe about you"
+                        value={cv.personal.summary}
+                        onChange={handleChange}
+                        className="input min-h-[80px] resize-y mt-1.5 mb-0"
                     />
                 </div>
             </div>

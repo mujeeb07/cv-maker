@@ -36,12 +36,30 @@ const getCV = async (req, res) => {
 
 const updateCV = async (req, res) => {
     try {
-        // const cv = await CV.findByIdAndUpdate(req.params.id, req.body, { new: true});
-        const cv = await CV.findOne({
-            // _id: id,
-            user: req.userId
-        })
-        res.json(cv)
+        
+    const updatedCV = await CV.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set: {
+            personal: req.body.personal,
+            skills: req.body.skills,
+            education: req.body.education,
+            experience: req.body.experience,
+            projects: req.body.projects,
+            template: req.body.template
+            }
+        },
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    if(!updateCV) {
+        res.status(404).json({message:"CV not founnd"});
+    }
+
+    res.status(200).json(updatedCV);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({message:"Failed to update CV"});

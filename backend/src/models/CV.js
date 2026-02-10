@@ -12,7 +12,8 @@ const cvSchema = new mongoose.Schema(
             email: String,
             phone: String,
             linkedin: String,
-            github: String
+            github: String,
+            summary: String
         },
         skills: [String],
         education: [

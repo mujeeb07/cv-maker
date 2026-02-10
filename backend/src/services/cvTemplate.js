@@ -18,6 +18,7 @@ const cvTemplate = (cv) => {
             <h1>${personal.fullName || ""}</h1>
             <p>${personal.email || ""} | ${personal.phone || ""}</p>
             <p>${personal.linkedin || ""} | ${personal.github || ""}</p>
+            <p>${personal.summary || ""}</p>
 
             <h2>Skills</h2>
             <ul>

@@ -7,6 +7,9 @@ import ExprienceForm from "../components/forms/ExperienceForm";
 import ProjectForm from "../components/forms/ProjectsForm";
 import PreviewRenderer from "../components/preview/PreviewRenderer";
 
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
 import axiosInstance from "../api/axiosConfig";
 import { Save, Download, FolderOpen, Layout as LayoutIcon } from 'lucide-react';
 import Layout from "../components/Layout";
@@ -32,7 +35,8 @@ export default function Builder() {
         setIsSaving(true);
         try {
             if (cvId) {
-                await axiosInstance.put(`/cv/${cvId}`);
+                await axiosInstance.put(`/cv/${cvId}`, cv);
+                console.log("CV:", cv)
                 alert("CV updated successfully");
             } else {
                 const response = await axiosInstance.post('/cv', cv);
@@ -124,6 +128,27 @@ export default function Builder() {
         }
     };
 
+    const downloadPDF = async () => {
+        const element = document.getElementById("pdf-content");
+        const canvas = await html2canvas(element, {
+            scale: 2,
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("document.pdf");
+    }
+
+    const handleDownload = async () => {
+        downloadCV();
+        downloadPDF();
+    }
+
     return (
         <Layout showThemeToggle={false}>
             <div className="flex flex-col h-screen">
@@ -165,7 +190,7 @@ export default function Builder() {
 
                         <Button
                             variant="outline"
-                            onClick={downloadCV}
+                            onClick={handleDownload}
                             className="gap-2 hidden md:flex"
                         >
                             <Download className="w-4 h-4" />
@@ -268,8 +293,8 @@ export default function Builder() {
                         </div>
                     </div>
 
-                    {/* Right Panel - Preview */}
-                    <div className="flex-1 bg-[var(--bg-background)] overflow-y-auto p-8 flex justify-center items-start custom-scrollbar relative">
+                    {/* Right Panel - Preview(PDF) */}
+                    <div id="pdf-content" className="flex-1 bg-[var(--bg-background)] overflow-y-auto p-8 flex justify-center items-start custom-scrollbar relative">
                         {/* Dot Pattern Background for Preview Area */}
                         <div className="absolute inset-0 z-0 opacity-[0.4]"
                             style={{ backgroundImage: 'radial-gradient(var(--text-tertiary) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
