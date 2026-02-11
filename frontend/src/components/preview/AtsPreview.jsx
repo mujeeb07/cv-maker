@@ -4,12 +4,12 @@ export default function AtsPreview({ cv }) {
     return(
     <div className="bg-white text-black p-10 min-h-[297mm] w-[210mm] mx-auto text-sm leading-relaxed">
         {/* Header */}
-        <div className="mb-6">
+        <div className="text-center mb-6">
             <h1 className="text-2xl font-bold uppercase">
             {personal.fullName}
             </h1>
 
-            <p>
+            <p className="mt-2">
             {personal.email}
             {personal.phone && ` | ${personal.phone}`}
             {personal.linkedin && ` | ${personal.linkedin}`}

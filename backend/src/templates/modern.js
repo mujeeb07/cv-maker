@@ -12,41 +12,52 @@ module.exports = (cv) => {
   <html>
   <head>
     <meta charset="UTF-8" />
-    <title>CV</title>
+    <title>Modern CV</title>
+
     <style>
+
       body {
         font-family: Arial, Helvetica, sans-serif;
-        padding: 40px;
-        color: #333;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #222;
+        padding: 35px 40px;
+        margin: 0;
       }
 
       h1 {
-        margin-bottom: 5px;
-        font-size: 28px;
+        font-size: 26px;
+        margin: 0 0 6px 0;
         text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       .contact {
-        font-size: 14px;
-        margin-bottom: 20px;
-        color: #555;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 18px;
+      }
+
+      hr {
+        border: none;
+        border-top: 2px solid #000;
+        margin: 12px 0 18px 0;
       }
 
       h2 {
-        font-size: 16px;
-        margin-top: 25px;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #000;
+        font-size: 14px;
+        margin: 20px 0 8px 0;
         text-transform: uppercase;
+        border-bottom: 1px solid #000;
+        padding-bottom: 4px;
       }
 
       .section {
-        margin-bottom: 15px;
+        margin-bottom: 14px;
       }
 
       .item {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
 
       .title {
@@ -54,37 +65,63 @@ module.exports = (cv) => {
       }
 
       .sub {
-        font-size: 13px;
+        font-size: 12px;
         color: #555;
       }
 
       ul {
         padding-left: 18px;
-        margin: 5px 0;
+        margin: 6px 0;
       }
 
       li {
         margin-bottom: 4px;
       }
 
-      .row {
-        display: flex;
-        justify-content: space-between;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+
+      .right {
+        text-align: right;
+        font-size: 12px;
+        color: #555;
+        white-space: nowrap;
       }
 
     </style>
   </head>
+
   <body>
 
     <!-- Header -->
     <h1>${personal.fullName || ""}</h1>
 
     <div class="contact">
-      ${personal.email || ""} 
+      ${personal.email || ""}
       ${personal.phone ? " | " + personal.phone : ""}
       ${personal.linkedin ? " | " + personal.linkedin : ""}
       ${personal.github ? " | " + personal.github : ""}
     </div>
+
+    <hr/>
+
+    <!-- Summary -->
+    ${
+      personal.summary
+        ? `
+      <h2>Professional Summary</h2>
+      <div class="section">
+        ${personal.summary}
+      </div>
+    `
+        : ""
+    }
 
     <!-- Skills -->
     ${
@@ -108,12 +145,14 @@ module.exports = (cv) => {
       <div class="section">
         ${experience
           .map(
-            (exp) => `
+            exp => `
           <div class="item">
-            <div class="row">
-              <div class="title">${exp.role || ""} - ${exp.company || ""}</div>
-              <div class="sub">${exp.start || ""} - ${exp.end || ""}</div>
-            </div>
+            <table>
+              <tr>
+                <td class="title">${exp.role || ""} - ${exp.company || ""}</td>
+                <td class="right">${exp.start || ""} - ${exp.end || ""}</td>
+              </tr>
+            </table>
             <div class="sub">${exp.description || ""}</div>
           </div>
         `
@@ -132,7 +171,7 @@ module.exports = (cv) => {
       <div class="section">
         ${projects
           .map(
-            (proj) => `
+            proj => `
           <div class="item">
             <div class="title">${proj.title || ""}</div>
             <div class="sub">${proj.tech || ""}</div>
@@ -154,12 +193,14 @@ module.exports = (cv) => {
       <div class="section">
         ${education
           .map(
-            (edu) => `
+            edu => `
           <div class="item">
-            <div class="row">
-              <div class="title">${edu.degree || ""} - ${edu.institute || ""}</div>
-              <div class="sub">${edu.year || ""}</div>
-            </div>
+            <table>
+              <tr>
+                <td class="title">${edu.degree || ""} - ${edu.institute || ""}</td>
+                <td class="right">${edu.year || ""}</td>
+              </tr>
+            </table>
           </div>
         `
           )

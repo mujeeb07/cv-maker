@@ -1,6 +1,8 @@
 const CV = require("../models/CV");
+const renderTemplate = require("../services/templateService");
 const generatePdf =  require("../services/pdfService")
-const cvTemplate = require("../services/cvTemplate");
+
+
 
 const createCV = async (req, res) => {
     try{
@@ -72,7 +74,7 @@ const downloadCV = async (req, res) => {
         const cv = await CV.findById(id);
         if(!cv) return res.status(404).json({message:"CV Not found"});
 
-        const html = cvTemplate(cv);
+        const html = renderTemplate(cv);
         const pdfBuffer = await generatePdf(html);
 
         res.setHeader("Content-Type", "application/pdf");
